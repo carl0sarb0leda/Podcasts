@@ -12,8 +12,26 @@ import { Fragment } from 'react'; //Fragment only used to avoid <div>
 const Index = () => {
 	return (
 		<React.Fragment>
-			<h1>Hello!!</h1>
-			<p>Welcome Next</p>
+			<h1>Welcome!!</h1>
+			<img src="/brown.png" alt="brown" />
+			<p>Made by Carlos</p>
+			<style jsx>
+				{`
+					h1 {
+						color: #2196f3;
+						text-align: center;
+						font-family: cursive;
+					}
+					:global(p) {
+						text-align: center;
+					}
+					img {
+						max-width: 25%;
+						display: block;
+						margin: 0 auto;
+					}
+				`}
+			</style>
 		</React.Fragment>
 	);
 };
