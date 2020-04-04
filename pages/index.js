@@ -16,12 +16,14 @@ const Index = (props) => {
 			<header>Podcast 😎</header>
 			<div className="channels">
 				{channels.map((channel) => (
-					<Link href={`/channel?id=${channel.id}`} key={channel.id}>
-						<a className="channel">
-							<img src={channel.urls.logo_image.original} alt="" />
-							<h2>{channel.title}</h2>
-						</a>
-					</Link>
+					<div key={channel.id}>
+						<Link href={`/channel/[channel]`} as={`/channel/${channel.id}`}>
+							<a className="channel">
+								<img src={channel.urls.logo_image.original} alt="" />
+								<h2>{channel.title}</h2>
+							</a>
+						</Link>
+					</div>
 				))}
 			</div>
 			<style jsx>{`
@@ -68,13 +70,25 @@ const Index = (props) => {
 	);
 };
 
+// export async function getStaticProps() {
+// 	//fetch data from the api
+// 	let req = await fetch('https://api.audioboom.com/channels/recommended?api_version=2');
+// 	const errorCode = req.status > 200 ? req.status : false; //handling status errors
+// 	let { body: channels } = await req.json(); //destructuring the request looking for channels inside the body key
+// 	//pass the data to Index via props
+// 	return {
+// 		props: { errorCode, channels }
+// 	};
+// }
 export async function getServerSideProps() {
 	//fetch data from the api
 	let req = await fetch('https://api.audioboom.com/channels/recommended?api_version=2');
 	const errorCode = req.status > 200 ? req.status : false; //handling status errors
 	let { body: channels } = await req.json(); //destructuring the request looking for channels inside the body key
 	//pass the data to Index via props
-	return { props: { errorCode, channels } };
+	return {
+		props: { errorCode, channels }
+	};
 }
 
 export default Index;
