@@ -29,7 +29,8 @@ const Channel = (props) => {
 
 			<h2>Ultimos Podcasts</h2>
 			{audioClips.map((clip) => (
-				<Link href={`/channel/podcast?id=${clip.id}`} key={clip.id}>
+				// <Link href={`/channel/podcast?id=${clip.id}`} key={clip.id}> same as below
+				<Link href={{ pathname: `/channel/podcast`, query: { id: clip.id } }} key={clip.id}>
 					<a className="podcast">
 						<h3>{clip.title}</h3>
 						<div className="meta">{Math.ceil(clip.duration / 60)} minutes</div>
@@ -125,7 +126,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
 	//be careful with params and query
 
-	let idChannel = params.channel; //params already brings the id from the prop as{} in <link> at index
+	let idChannel = params.channel; //params already brings the id from index
 	//console.log('------------------------', params);
 	//fetch data from the api
 	let [ reqChannel, reqSeries, reqAudios ] = await Promise.all([

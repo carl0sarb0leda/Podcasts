@@ -99,7 +99,7 @@ const Podcast = ({ podcast }) => {
 
 // This function gets called at build time
 export async function getServerSideProps({ query }) {
-	const res = await fetch(`https://api.audioboom.com/audio_clips/${query.id}.mp3`);
+	const res = await fetch(`https://api.audioboom.com/audio_clips/${query.id}.mp3`); //taking from query in [channel].js
 	const podcast = (await res.json()).body.audio_clip;
 	return {
 		props: {
