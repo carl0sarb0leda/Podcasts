@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
+import Loading from './Loading';
 
 const Layout = ({ children, title }) => {
 	const router = useRouter();
@@ -17,8 +18,8 @@ const Layout = ({ children, title }) => {
 				<Link href={'/'}>
 					<a>Podcast 😎</a>
 				</Link>
-
 				<MyLink href={'/about'}>About 🦉</MyLink>
+				<Loading />
 			</header>
 
 			{/* We should include the children from props to pass all the content */}
