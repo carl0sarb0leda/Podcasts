@@ -1,11 +1,11 @@
-import { Fragment } from 'react';
+import Layout from '../components/Layout';
 
 const About = () => {
 	return (
-		<Fragment>
-			<h1>About</h1>
+		<Layout title={'About'}>
 			<img src="/brown.png" alt="brown" />
-		</Fragment>
+			<p>Made by @carlosaepn 🔥</p>
+		</Layout>
 	);
 };
 

@@ -1,8 +1,14 @@
 import { Fragment } from 'react';
 import fetch from 'node-fetch';
 import Link from 'next/link';
+import Error from 'next/error';
 
-const Podcast = ({ podcast }) => {
+const Podcast = ({ errorCode, podcast }) => {
+	//'Early return' for error
+	if (errorCode) {
+		return <Error statusCode={errorCode} />;
+	}
+
 	return (
 		<Fragment>
 			<header>Podcasts 🤯 </header>
@@ -99,12 +105,27 @@ const Podcast = ({ podcast }) => {
 
 // This function gets called at build time
 export async function getServerSideProps({ query }) {
-	const res = await fetch(`https://api.audioboom.com/audio_clips/${query.id}.mp3`); //taking from query in [channel].js
-	const podcast = (await res.json()).body.audio_clip;
-	return {
-		props: {
-			podcast
+	let errorCode = false;
+	try {
+		//taking from query in [channel].js
+		let req = await fetch(`https://api.audioboom.com/audio_clips/${query.id}.mp3`);
+
+		//handling status errors
+		if (req.status > 200) {
+			errorCode = req.status;
+			return {
+				props: { errorCode }
+			};
 		}
-	};
+		let podcast = (await req.json()).body.audio_clip;
+		return {
+			props: { errorCode, podcast }
+		};
+	} catch (error) {
+		errorCode = 503;
+		return {
+			props: { errorCode }
+		};
+	}
 }
 export default Podcast;

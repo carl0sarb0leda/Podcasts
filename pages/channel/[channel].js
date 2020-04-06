@@ -2,16 +2,34 @@ import fetch from 'node-fetch';
 import Layout from '../../components/Layout';
 import Banner from '../../components/Channel/Banner';
 import Serie from '../../components/Channel/Serie';
-import Podcast from '../../components/Channel/Podcast';
+import PodcastList from '../../components/Channel/PodcastList';
+import PodcastPlayer from '../../components/Channel/PodcastPlayer';
 
 const Channel = (props) => {
 	const { channel, audioClips, series } = props;
+	//Hooks
+	const [ openPodcast, setOpenPodcast ] = React.useState('');
+	const setPodcastOpen = (event, podcast) => {
+		event.preventDefault();
+		setOpenPodcast(podcast);
+	};
+	const setPodcastClose = (event, podcast) => {
+		event.preventDefault();
+		setOpenPodcast(null);
+	};
+
 	return (
 		<Layout title={channel.title}>
 			<Banner channel={channel} />
+			{/* Modal */}
+			{openPodcast && (
+				<div className="modal">
+					<PodcastPlayer clip={openPodcast} onClose={setPodcastClose} />
+				</div>
+			)}
 			<h1>{channel.title}</h1>
 			<Serie series={series} />
-			<Podcast audioClips={audioClips} />
+			<PodcastList audioClips={audioClips} onClickPodcast={setPodcastOpen} />
 		</Layout>
 	);
 };
@@ -50,7 +68,6 @@ export async function getStaticProps({ params }) {
 	let series = (await reqSeries.json()).body.channels;
 	let audioClips = (await reqAudios.json()).body.audio_clips;
 
-	//pass the data to Channel via props
 	return {
 		props: { channel, audioClips, series }
 	};

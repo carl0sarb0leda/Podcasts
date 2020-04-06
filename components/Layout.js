@@ -1,8 +1,10 @@
 import { Fragment } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 
 const Layout = ({ children, title }) => {
+	const router = useRouter();
 	return (
 		<React.Fragment>
 			{/* Head allows manage the title and meta elements*/}
@@ -12,9 +14,11 @@ const Layout = ({ children, title }) => {
 
 			{/* From here is the actual layout  */}
 			<header>
-				<Link href={`/`}>
+				<Link href={'/'}>
 					<a>Podcast 😎</a>
 				</Link>
+
+				<MyLink href={'/about'}>About 🦉</MyLink>
 			</header>
 
 			{/* We should include the children from props to pass all the content */}
@@ -27,7 +31,7 @@ const Layout = ({ children, title }) => {
 						color: #fff;
 						background: #8756ca;
 						padding: 15px;
-						text-align: center;
+						text-align: right;
 					}
 					header a {
 						color: #fff;
@@ -46,6 +50,31 @@ const Layout = ({ children, title }) => {
 				`}
 			</style>
 		</React.Fragment>
+	);
+};
+
+const MyLink = ({ children, href }) => {
+	const router = useRouter();
+	return (
+		<a
+			href="#"
+			onClick={(e) => {
+				e.preventDefault();
+				// typically you want to use `next/link` for this usecase
+				// but this example shows how you can also access the router
+				// and use it manually
+				router.push(href);
+			}}
+		>
+			{children}
+			<style jsx>{`
+				a {
+					color: #fff;
+					text-decoration: none;
+					padding: 10px;
+				}
+			`}</style>
+		</a>
 	);
 };
 
