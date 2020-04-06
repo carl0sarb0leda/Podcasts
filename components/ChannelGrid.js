@@ -14,6 +14,7 @@ const ChannelGrid = ({ channels }) => {
 				</div>
 			))}
 
+			{/* Styles */}
 			<style jsx>{`
 				.channels {
 					display: grid;

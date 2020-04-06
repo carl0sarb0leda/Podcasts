@@ -33,16 +33,4 @@ export async function getStaticProps() {
 	};
 }
 
-//This gonna be prerender in build time and rendering again on EACH REQUEST
-// export async function getServerSideProps() {
-// 	//fetch data from the api
-// 	let req = await fetch('https://api.audioboom.com/channels/recommended?api_version=2');
-// 	const errorCode = req.status > 200 ? req.status : false; //handling status errors
-// 	let { body: channels } = await req.json(); //destructuring the request looking for channels inside the body key
-// 	//pass the data to Index via props
-// 	return {
-// 		props: { errorCode, channels }
-// 	};
-// }
-
 export default Index;
