@@ -16,7 +16,7 @@ const Layout = ({ children, title }) => {
 			{/* From here is the actual layout  */}
 			<header>
 				<Link href={'/'}>
-					<a>Podcast 😎</a>
+					<a>Podcast Demo 😎</a>
 				</Link>
 				<MyLink href={'/about'}>About 🦉</MyLink>
 				<Loading />
